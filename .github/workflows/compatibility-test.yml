@@ -1,0 +1,29 @@
+name: Compatibility Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  compatibility-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [8, 11, 16]  # Add the Java versions you want to test
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ matrix.java }}
+
+      - name: Build and Test
+        run: |
+          chmod +x mvnw
+          ./mvnw clean test  # Adjust this command based on your build tool
+
